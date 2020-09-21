@@ -41,17 +41,26 @@
       this.scroll.on('scroll', (position)=>{
         this.$emit('scroll', position)
       })
-      //3.上来加载更多数据
-      this.scroll.on('pullingUp',()=>{
-        this.$emit('pullingUp')
-      })
+      if(this.pullUpLoad){
+        //3.上来加载更多数据
+        this.scroll.on('pullingUp',()=>{
+          this.pullingUp();
+        })
+      }
+
     },
     methods: {
+      pullingUp(){
+        this.$emit('pullingUp')
+        this.finishPullUp();
+        //因为图片异步加载问题，造成better-scroll计算加载区域不一致问题;需要在图片加载完毕后，refresh
+        this.scroll.refresh();
+      },
       scrollTo(x, y, time = 300) {
-        this.scroll.scrollTo(x, y, time)
+        this.scroll && this.scroll.scrollTo(x, y, time)
       },
       finishPullUp(){
-        this.scroll.finishPullUp()
+        this.scroll && this.scroll.finishPullUp()
       }
     }
   }

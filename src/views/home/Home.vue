@@ -3,12 +3,19 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
+    <tab-control :titles="['流行', '新款', '精选']"
+                 @tabClick="tabClick"
+                 class="tabControl"
+                 ref="tabControl1"
+                 v-show="isTabControlFixed" ></tab-control>
     <scroll class="content" ref="scroll" :probe-type="3" :pull-up-load="true"
             @scroll="contentScroll" @pullingUp="loadMore">
-      <home-swiper :banners="banners"/>
+      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
       <home-recommands :recommands="recommands"/>
       <feature-view></feature-view>
-      <tab-control class="tab-control" :titles="['流行', '新款', '精选']" @tabClick="tabClick"></tab-control>
+      <tab-control :titles="['流行', '新款', '精选']"
+                   @tabClick="tabClick"
+                   ref="tabControl"></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
     <!--组件的点击事件，必须增加native修饰-->
@@ -40,9 +47,88 @@
       HomeRecommands,
       FeatureView,
     },
+    created() {
+      //在组建创建完毕后，执行的逻辑
+      //1.请求获取多个数据
+      this.getHomeMultidata();
+      //商品操作：默认都加载第一页数据
+      this.getHomeGoods('pop');
+      this.getHomeGoods('news');
+      this.getHomeGoods('sell');
+
+    },
+    mounted() {
+
+    },
+    methods: {
+      /**
+       * 图片加载监听事件
+       */
+      swiperImageLoad(){
+        this.tabControlOffset = this.$refs.tabControl.$el.offsetTop
+      },
+      /**
+       * 事件监听
+       */
+      tabClick(index) {
+        switch (index) {
+          case 0:
+            this.currentType = 'pop';
+            break;
+          case 1:
+            this.currentType = 'news';
+            break;
+          case 2:
+            this.currentType = 'sell';
+            break;
+          default:
+            this.currentType = 'pop'
+        }
+        this.$refs.tabControl1.currentIndex = index;
+        this.$refs.tabControl.currentIndex = index;
+      },
+      backClick() {
+        this.$refs.scroll.scrollTo(0, 0, 500)
+      },
+      contentScroll(position) {
+        //1.判断BackTop是否显示
+        this.backShow = position.y < -1000
+        //2.决定TabControl是否吸顶(position: fixed)
+        this.isTabControlFixed = position.y < -this.tabControlOffset;
+
+      },
+      loadMore(){
+        this.getHomeGoods(this.currentType);
+      },
+      /**
+       * 网络请求
+       */
+      getHomeMultidata() {
+        // getHomeMultidata().then(res => {
+        //   this.banners = res.data.banner.list;
+        //   this.recommands = res.data.recommand.list;
+        // })
+      },
+      getHomeGoods(type) {
+        console.log('访问后端获取 '+type+' 数据')
+        // const page = this.goods[type].page + 1;
+        // getHomeGoods(type, page).then(res => {
+        //   this.goods[type].list.push(...res.data.list);
+        //   this.goods[type].page++;
+        // })
+
+      }
+    },
+    computed: {
+      showGoods() {
+        return this.goods[this.currentType].list;
+      }
+    },
     data() {
       return {
         backShow: false,
+        tabControlOffset: 0,
+        isTabControlFixed: false,
         banners: [
           {
             link: '#',
@@ -1107,70 +1193,6 @@
         },
         currentType: 'pop'
       }
-    },
-    created() {
-      //在组建创建完毕后，执行的逻辑
-      //1.请求获取多个数据
-      this.getHomeMultidata()
-      //商品操作：默认都加载第一页数据
-      this.getHomeGoods('pop')
-      this.getHomeGoods('news')
-      this.getHomeGoods('sell')
-    },
-    methods: {
-      /**
-       * 事件监听
-       */
-      tabClick(index) {
-        switch (index) {
-          case 0:
-            this.currentType = 'pop';
-            break;
-          case 1:
-            this.currentType = 'news';
-            break;
-          case 2:
-            this.currentType = 'sell';
-            break;
-          default:
-            this.currentType = 'pop'
-        }
-      },
-      backClick() {
-        this.$refs.scroll.scrollTo(0, 0, 500)
-      },
-      contentScroll(position) {
-        this.backShow = position.y < -1000
-      },
-      loadMore(){
-        this.getHomeGoods(this.currentType);
-        this.$refs.scroll.finishPullUp();
-        //因为图片异步加载问题，造成better-scroll计算加载区域不一致问题;需要在图片加载完毕后，refresh
-        this.$refs.scroll.scroll.refresh();
-      },
-      /**
-       * 网络请求
-       */
-      getHomeMultidata() {
-        // getHomeMultidata().then(res => {
-        //   this.banners = res.data.banner.list;
-        //   this.recommands = res.data.recommand.list;
-        // })
-      },
-      getHomeGoods(type) {
-        console.log('访问后端获取 '+type+' 数据')
-        // const page = this.goods[type].page + 1;
-        // getHomeGoods(type, page).then(res => {
-        //   this.goods[type].list.push(...res.data.list);
-        //   this.goods[type].page++;
-        // })
-
-      }
-    },
-    computed: {
-      showGoods() {
-        return this.goods[this.currentType].list;
-      }
     }
   }
 </script>
@@ -1185,11 +1207,12 @@
     background-color: var(--color-tint);
     color: #fff;
 
-    position: fixed;
+ /*   原生时使用该配置，使用scroll插件不需要使用
+ position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 9;
+    z-index: 9;*/
   }
 
   .content {
@@ -1198,15 +1221,8 @@
     top: 44px;
     bottom: 49px;
   }
-
-  /*.content {*/
-  /*  height: calc(100% - 93px);*/
-  /*  overflow: hidden;*/
-  /*  margin-top: 44px;*/
-  /*}*/
-  .tab-control {
-    position: sticky;
-    top: 44px;
+  .tabControl{
+    position: relative;
     z-index: 9;
   }
 </style>
