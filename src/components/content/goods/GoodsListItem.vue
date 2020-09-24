@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <img :src="goodsItem.image" alt="">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -16,6 +16,13 @@
       goodsItem: {
         type: Object,
         default: {}
+      }
+    },
+    methods:{
+      itemClick(){
+        //路由跳转，如果需要返回，则使用push
+        // this.$router.push('/detail');
+        this.$router.push('/detail/'+this.goodsItem.id)
       }
     }
   }

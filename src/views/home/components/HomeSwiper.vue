@@ -1,6 +1,6 @@
 <template>
   <div>
-    <swiper>
+    <swiper >
       <swiper-item v-for="item in banners">
         <a :href="item.image">
           <img :src="item.image" alt="" @load="imageLoad"/>
@@ -45,5 +45,4 @@
 </script>
 
 <style scoped>
-
 </style>
