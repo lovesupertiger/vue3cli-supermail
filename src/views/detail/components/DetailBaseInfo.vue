@@ -59,22 +59,43 @@
     font-size: 13px;
     margin-left: 5px;
     text-decoration: line-through;
-
   }
 
-  .discount {
-
+  .price .discount {
+    font-size: 12px;
+    padding: 2px 5px;
+    color: #ffffff;
+    background-color: var(--color-high-text);
+    border-radius: 8px;
+    margin-left: 5px;
+    position: relative;
+    top: -8px;
   }
 
   .other {
-
+    margin-top: 15px;
+    line-height: 30px;
+    display: flex;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(100, 100, 100, .1);
+    justify-content: space-between;
   }
 
   .service {
-
+    display: flex;
+    justify-content: space-between;
+    line-height: 60px;
   }
 
-  .service-item {
+  .service-item img {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top: 2px;
+  }
 
+  .service-item span {
+    font-size: 13px;
+    color: #333333;
   }
 </style>
