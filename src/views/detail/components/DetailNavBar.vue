@@ -44,6 +44,7 @@
 <style scoped>
   .title {
     display: flex;
+    padding: 0 10px;
     font-size: 13px;
   }
 
@@ -55,9 +56,9 @@
     color: #d4237a;
   }
   .back img{
-    margin-left: 20px;
+    margin-left: 10px;
     margin-top: 12px;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 </style>
