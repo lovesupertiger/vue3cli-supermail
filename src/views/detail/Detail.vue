@@ -78,7 +78,6 @@
       DetailNavBar,
       DetailSwiper,
       DetailBaseInfo,
-
     },
     data() {
       return {
