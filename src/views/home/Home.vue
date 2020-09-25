@@ -57,8 +57,11 @@
       this.getHomeGoods('sell');
 
     },
-    mounted() {
-
+    activated() {
+      this.$refs.scroll.scrollTo(0, this.saveY)
+    },
+    deactivated() {
+      this.saveY = this.$refs.scroll.getCurrentY();
     },
     methods: {
       /**
@@ -95,7 +98,6 @@
         this.backShow = position.y < -1000
         //2.决定TabControl是否吸顶(position: fixed)
         this.isTabControlFixed = position.y < -this.tabControlOffset;
-
       },
       loadMore(){
         this.getHomeGoods(this.currentType);
@@ -129,6 +131,7 @@
         backShow: false,
         tabControlOffset: 0,
         isTabControlFixed: false,
+        saveY: 0,
         banners: [
           {
             link: '#',

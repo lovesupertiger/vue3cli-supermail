@@ -61,6 +61,9 @@
       },
       finishPullUp(){
         this.scroll && this.scroll.finishPullUp()
+      },
+      getCurrentY(){
+        return this.scroll && this.scroll.y;
       }
     }
   }
