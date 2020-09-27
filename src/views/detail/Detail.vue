@@ -1,9 +1,10 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav"></detail-nav-bar>
+    <detail-nav-bar></detail-nav-bar>
     <scroll class="content" ref="scroll">
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
+      <detail-shop-info :shop="shop"></detail-shop-info>
       <detail-goods-info :detail-info="detailInfo"></detail-goods-info>
       <detail-param-info :param-info="paramInfo"></detail-param-info>
     </scroll>
@@ -16,6 +17,7 @@
   import DetailNavBar from "./components/DetailNavBar";
   import DetailSwiper from "./components/DetailSwiper";
   import DetailBaseInfo from "./components/DetailBaseInfo";
+  import DetailShopInfo from "./components/DetailShopInfo";
   import DetailGoodsInfo from "./components/DetailGoodsInfo";
   import DetailParamInfo from "./components/DetailParamInfo";
 
@@ -26,6 +28,7 @@
       DetailNavBar,
       DetailSwiper,
       DetailBaseInfo,
+      DetailShopInfo,
       DetailGoodsInfo,
       DetailParamInfo
     },
@@ -55,6 +58,7 @@
           newPrice: 59.9,
           oldPrice: 159.9,
           discount: '十一促销',
+          discountBgColor:'#FFB200FE',
           column: ['销量 100W','收藏1000人'],
           services: [
             {name: '退货补运费', icon: 'http://p0.ifengimg.com/a/2019_16/9c4a1898c4155f9_size376_w750_h1000.jpg'},
@@ -64,6 +68,17 @@
               name: '退货补运费',
               icon: 'http://p0.ifengimg.com/a/2019_16/9c4a1898c4155f9_size376_w750_h1000.jpg'
             },
+          ]
+        },
+        shop:{
+          shopLogo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/WordPress_blue_logo.svg/768px-WordPress_blue_logo.svg.png',
+          name: '碧凌殿',
+          sellsCount: 100000,
+          goodsCount: 400,
+          score:[
+            {'name':'描述相符', score:4.96, isBetter: true},
+            {'name':'价格合理', score:5, isBetter: true},
+            {'name':'质量满意', score:4.96, isBetter: true},
           ]
         },
         detailInfo: {
@@ -119,12 +134,6 @@
     z-index: 9;
     background-color: #ffffff;
     height: 100vh;
-  }
-
-  .detail-nav {
-    position: relative;
-    z-index: 9;
-    background-color: #ffffff;
   }
 
   .content {

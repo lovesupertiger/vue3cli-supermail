@@ -1,5 +1,5 @@
 <template>
- <div>
+ <div class="detail-nav">
    <NavBar>
      <div slot="left" class="back" @click="back">
        <img src="~assets/img/common/arrow-left.svg" alt=""/>
@@ -42,6 +42,11 @@
 </script>
 
 <style scoped>
+  .detail-nav{
+    position: relative;
+    z-index: 9;
+    background-color: #ffffff;
+  }
   .title {
     display: flex;
     padding: 0 10px;
