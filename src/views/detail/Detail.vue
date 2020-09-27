@@ -5,8 +5,9 @@
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
-      <detail-goods-info :detail-info="detailInfo"></detail-goods-info>
+      <detail-goods-info :detail-info="detailInfo" @imgLoad="imageLoad"></detail-goods-info>
       <detail-param-info :param-info="paramInfo"></detail-param-info>
+      <detail-comment-info :comment="commentInfo"></detail-comment-info>
     </scroll>
   </div>
 </template>
@@ -20,6 +21,7 @@
   import DetailShopInfo from "./components/DetailShopInfo";
   import DetailGoodsInfo from "./components/DetailGoodsInfo";
   import DetailParamInfo from "./components/DetailParamInfo";
+  import DetailCommentInfo from "./components/DetailCommentInfo";
 
   export default {
     name: "Detail",
@@ -30,7 +32,8 @@
       DetailBaseInfo,
       DetailShopInfo,
       DetailGoodsInfo,
-      DetailParamInfo
+      DetailParamInfo,
+      DetailCommentInfo
     },
     data() {
       return {
@@ -116,11 +119,25 @@
           ],
           image: ''
         },
+        commentInfo:{
+          user:{
+            avatar: 'http://img.mm4000.com/file/f/9c/31033dd2de.jpg',
+            uname: 'jin'
+          },
+          content:'交警对方那里可是家里都放假了受到警方介绍了KDJ富士康老地方水电费世界的看法奇偶数DNF，上帝就发撕开你的看法就是看到减肥',
+          created: new Date().getTime(),
+          style: '',
+          images:[
+            'https://tse1-mm.cn.bing.net/th/id/OIP.bHMi15X34Cr7lY3tJ8BeBwHaEK?pid=Api&rs=1',
+            'https://photo.tuchong.com/7037489/f/38780868.jpg',
+            'https://tse4-mm.cn.bing.net/th/id/OIP.VTRY5Pz7yd7FMu2sTAzrswHaJ4?pid=Api&rs=1'
+          ]
+        }
       }
     },
     methods: {
       imageLoad() {
-        this.$refs.scroll.refresh()
+        this.$refs.scroll.refresh();
       }
     },
     created() {

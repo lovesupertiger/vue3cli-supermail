@@ -64,6 +64,9 @@
       },
       getCurrentY(){
         return this.scroll && this.scroll.y;
+      },
+      refresh(){
+        this.scroll.refresh();
       }
     }
   }

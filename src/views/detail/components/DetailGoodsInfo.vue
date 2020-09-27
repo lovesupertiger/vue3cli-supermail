@@ -34,14 +34,24 @@
     },
     methods: {
       imgLoad() {
+        if(this.imagesLength === 0){
+          this.imagesLength = this.getImagesLength();
+        }
         if (++this.counter === this.imagesLength) {
           this.$emit("imgLoad");
         }
+      },
+      getImagesLength(){
+        let total = 0;
+        for(let item of this.detailInfo.detailImage){
+          total+=item.list.length;
+        }
+        return total;
       }
     },
     watch: {
       detailInfo() {
-        this.imagesLength = this.detailInfo.detailImage[0].list.length;
+        this.imagesLength = this.getImagesLength();
       }
     }
   }
