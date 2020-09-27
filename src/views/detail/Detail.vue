@@ -82,10 +82,17 @@
           ]
         },
         detailInfo: {
-          desc: '商品详情',
+          desc: '韩版休闲男装，网红服装',
           detailImage: [
             {
-              key: '系列一', list: [
+              key: '穿着效果', list: [
+                'https://uploadfile.bizhizu.cn/up/5a/6a/3b/5a6a3bd2d5e6f1f1e62f21375da8d85a.jpg',
+                'https://uploadfile.bizhizu.cn/up/5a/6a/3b/5a6a3bd2d5e6f1f1e62f21375da8d85a.jpg',
+                'https://uploadfile.bizhizu.cn/up/5a/6a/3b/5a6a3bd2d5e6f1f1e62f21375da8d85a.jpg'
+              ]
+            },
+            {
+              key: '设计工艺', list: [
                 'https://uploadfile.bizhizu.cn/up/5a/6a/3b/5a6a3bd2d5e6f1f1e62f21375da8d85a.jpg',
                 'https://uploadfile.bizhizu.cn/up/5a/6a/3b/5a6a3bd2d5e6f1f1e62f21375da8d85a.jpg',
                 'https://uploadfile.bizhizu.cn/up/5a/6a/3b/5a6a3bd2d5e6f1f1e62f21375da8d85a.jpg'
