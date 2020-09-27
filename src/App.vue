@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <keep-alive exclude="Detail"><!-- 保持template不被销毁-->
+
+    <!-- 保持template不被销毁, 通过exclude指定哪些可以被销毁-->
+    <keep-alive exclude="Detail">
       <router-view/>
     </keep-alive>
     <main-tabbar/>

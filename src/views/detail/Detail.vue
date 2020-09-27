@@ -51,7 +51,7 @@
           },
         ],
         goods: {
-          title: '衣服',
+          title: '2020春秋冬白色休闲西装，圆领韩版修身百搭',
           newPrice: 59.9,
           oldPrice: 159.9,
           discount: '十一促销',

@@ -1,6 +1,6 @@
 <template>
   <div id="hy-swiper">
-    <div class="swiper" @touchstart="touchStart" @touchmove="touchEnd" @touchend="touchEnd">
+    <div class="swiper" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
       <slot></slot>
     </div>
     <slot name="indicator"></slot>
@@ -84,18 +84,19 @@
        * 检测正确的位置
        */
       checkPosition() {
-        window.setTimeout(() => {
+        let _this = this;
+        setTimeout(() => {
           //1.校正正确的位置
-          this.swiperStyle.transform = '0ms';
-          if (this.currentIndex >= this.sliCount + 1) {
-            this.currentIndex = 1;
-            this.setTransform(-this.currentIndex * this.totalWidth);
+          _this.swiperStyle.transform = '0ms';
+          if (_this.currentIndex >= _this.slideCount + 1) {
+            _this.currentIndex = 1;
+            _this.setTransform(-_this.currentIndex * _this.totalWidth);
           } else if (this.currentIndex <= 0) {
-            this.currentIndex = this.sliCount;
-            this.setTransform(-this.currentIndex * this.totalWidth)
+            _this.currentIndex = _this.slideCount;
+            this.setTransform(-_this.currentIndex * this.totalWidth)
           }
           //2.结束移动后的回调
-          this.$emit('transitionEnd', this.currentIndex - 1);
+          _this.$emit('transitionEnd', _this.currentIndex - 1);
         }, this.animDuration)
       },
       /**
