@@ -79,7 +79,6 @@
   .bar-right .cart {
     background-color: #ffe817;
     color: #333333;
-    margin-bottom: 4px;
   }
 
   .bar-right .buy {
