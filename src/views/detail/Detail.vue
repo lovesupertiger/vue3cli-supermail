@@ -66,8 +66,8 @@
           newPrice: 59.9,
           oldPrice: 159.9,
           discount: '十一促销',
-          discountBgColor:'#FFB200FE',
-          column: ['销量 100W','收藏1000人'],
+          discountBgColor: '#FFB200FE',
+          column: ['销量 100W', '收藏1000人'],
           services: [
             {name: '退货补运费', icon: 'http://p0.ifengimg.com/a/2019_16/9c4a1898c4155f9_size376_w750_h1000.jpg'},
             {name: '全国包邮', icon: 'http://p0.ifengimg.com/a/2019_16/9c4a1898c4155f9_size376_w750_h1000.jpg'},
@@ -78,15 +78,15 @@
             },
           ]
         },
-        shop:{
-          shopLogo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/WordPress_blue_logo.svg/768px-WordPress_blue_logo.svg.png',
+        shop: {
+          shopLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/WordPress_blue_logo.svg/768px-WordPress_blue_logo.svg.png',
           name: '碧凌殿',
           sellsCount: 100000,
           goodsCount: 400,
-          score:[
-            {'name':'描述相符', score:4.96, isBetter: true},
-            {'name':'价格合理', score:5, isBetter: true},
-            {'name':'质量满意', score:4.96, isBetter: true},
+          score: [
+            {'name': '描述相符', score: 4.96, isBetter: true},
+            {'name': '价格合理', score: 5, isBetter: true},
+            {'name': '质量满意', score: 4.96, isBetter: true},
           ]
         },
         detailInfo: {
@@ -124,21 +124,21 @@
           ],
           image: ''
         },
-        commentInfo:{
-          user:{
+        commentInfo: {
+          user: {
             avatar: 'http://img.mm4000.com/file/f/9c/31033dd2de.jpg',
             uname: 'jin'
           },
-          content:'交警对方那里可是家里都放假了受到警方介绍了KDJ富士康老地方水电费世界的看法奇偶数DNF，上帝就发撕开你的看法就是看到减肥',
+          content: '交警对方那里可是家里都放假了受到警方介绍了KDJ富士康老地方水电费世界的看法奇偶数DNF，上帝就发撕开你的看法就是看到减肥',
           created: new Date().getTime(),
           style: '',
-          images:[
+          images: [
             'https://tse1-mm.cn.bing.net/th/id/OIP.bHMi15X34Cr7lY3tJ8BeBwHaEK?pid=Api&rs=1',
             'https://photo.tuchong.com/7037489/f/38780868.jpg',
             'https://tse4-mm.cn.bing.net/th/id/OIP.VTRY5Pz7yd7FMu2sTAzrswHaJ4?pid=Api&rs=1'
           ]
         },
-        recommands:[
+        recommands: [
           {
             id: 1,
             title: '商品1',
@@ -538,6 +538,17 @@
       // getDetail(this.id).then(res => {
       //   this.goods = undefined === res ? {} : new Goods(res);
       // })
+    },
+    mounted() {
+
+      let count = this.recommands.length;
+      let index = 0;
+      //从事件总线中获取事件
+      this.$bus.$on('imageLoad', () => {
+        if(++index === count){
+          this.$refs.scroll.refresh();
+        }
+      })
     }
 
   }

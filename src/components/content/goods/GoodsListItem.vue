@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="goodsItem.image" alt="">
+    <img :src="goodsItem.image" alt="" @load="imgLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -23,6 +23,10 @@
         //路由跳转，如果需要返回，则使用push
         // this.$router.push('/detail');
         this.$router.push('/detail/'+this.goodsItem.id)
+      },
+      imgLoad(){
+        //提交事件到事件总线中
+        this.$bus.$emit("imageLoad")
       }
     }
   }
