@@ -7,6 +7,11 @@ const store = new Vuex.Store({
   state: {
     cartList: []
   },
+  getters:{
+    cartLength(state){
+      return state.cartList.length;
+    }
+  },
   mutations: {
     //mutations唯一的目的是为了修改state的状态
     //mutations中的每个方式尽可能完成的事件要单一点
