@@ -1,14 +1,14 @@
 <template>
   <div id="detail">
-    <detail-nav-bar></detail-nav-bar>
+    <detail-nav-bar @titleClick="titleClick"></detail-nav-bar>
     <scroll class="content" ref="scroll">
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
       <detail-goods-info :detail-info="detailInfo" @imgLoad="imageLoad"></detail-goods-info>
-      <detail-param-info :param-info="paramInfo"></detail-param-info>
-      <detail-comment-info :comment="commentInfo"></detail-comment-info>
-      <goods-list :goods="recommands"></goods-list>
+      <detail-param-info :param-info="paramInfo" ref="paramInfo"></detail-param-info>
+      <detail-comment-info :comment="commentInfo" ref="commentInfo"></detail-comment-info>
+      <goods-list :goods="recommands" ref="recommands"></goods-list>
     </scroll>
   </div>
 </template>
@@ -524,11 +524,20 @@
             cfav: 10
           }
         ],
+        themeTopYs: []
       }
     },
     methods: {
       imageLoad() {
         this.$refs.scroll.refresh();
+        this.themeTopYs=[];
+        this.themeTopYs.push(0);
+        this.themeTopYs.push(this.$refs.paramInfo.$el.offsetTop-30);
+        this.themeTopYs.push(this.$refs.commentInfo.$el.offsetTop-30);
+        this.themeTopYs.push(this.$refs.recommands.$el.offsetTop-30);
+      },
+      titleClick(index) {
+        this.$refs.scroll.scrollTo(0, -this.themeTopYs[index])
       }
     },
     created() {
@@ -540,12 +549,11 @@
       // })
     },
     mounted() {
-
       let count = this.recommands.length;
       let index = 0;
       //从事件总线中获取事件
       this.$bus.$on('imageLoad', () => {
-        if(++index === count){
+        if (++index === count) {
           this.$refs.scroll.refresh();
         }
       })

@@ -35,6 +35,8 @@
   import HomeRecommands from "./components/HomeRecommands";
   import FeatureView from "./components/FeatureView";
 
+  import {getHomeMultidata} from 'network/home.js'
+
   export default {
     name: "Home",
     components: {
@@ -50,7 +52,7 @@
     created() {
       //在组建创建完毕后，执行的逻辑
       //1.请求获取多个数据
-      this.getHomeMultidata();
+      this.getHomeData();
       //商品操作：默认都加载第一页数据
       this.getHomeGoods('pop');
       this.getHomeGoods('news');
@@ -99,10 +101,11 @@
       /**
        * 网络请求
        */
-      getHomeMultidata() {
+      getHomeData() {
         // getHomeMultidata().then(res => {
-        //   this.banners = res.data.banner.list;
-        //   this.recommands = res.data.recommand.list;
+        //   // this.banners = res.data.banner.list;
+        //   // this.recommands = res.data.recommand.list;
+        //   console.log(res)
         // })
       },
       getHomeGoods(type) {
