@@ -10,6 +10,7 @@
       <detail-comment-info :comment="commentInfo" ref="commentInfo"></detail-comment-info>
       <goods-list :goods="recommands" ref="recommands"></goods-list>
     </scroll>
+    <detail-bottom-bar></detail-bottom-bar>
   </div>
 </template>
 
@@ -24,7 +25,7 @@
   import DetailGoodsInfo from "./components/DetailGoodsInfo";
   import DetailParamInfo from "./components/DetailParamInfo";
   import DetailCommentInfo from "./components/DetailCommentInfo";
-
+  import DetailBottomBar from "./components/DetailBottomBar";
 
   export default {
     name: "Detail",
@@ -39,6 +40,7 @@
       DetailGoodsInfo,
       DetailParamInfo,
       DetailCommentInfo,
+      DetailBottomBar
     },
     data() {
       return {
@@ -544,7 +546,7 @@
       contentScroll(position) {
         const y = -position.y;
         for (let i = 0; i < this.themeTopYs.length; i++) {
-          if (this.currentIndex != i && y > this.themeTopYs[i] && y<this.themeTopYs[i+1]) {
+          if (this.currentIndex != i && y >= this.themeTopYs[i] && y<this.themeTopYs[i+1]) {
             this.currentIndex = i;
             this.$refs.DetailNavbar.currentIndex = this.currentIndex;
           }
@@ -581,6 +583,6 @@
   }
 
   .content {
-    height: calc(100% - 44px);
+    height: calc(100% - 44px - 49px);
   }
 </style>
