@@ -12,7 +12,7 @@
             @scroll="contentScroll" @pullingUp="loadMore">
       <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
       <home-recommands :recommands="recommands"/>
-      <feature-view></feature-view>
+      <feature-view @imgLoad="scrollRefresh"></feature-view>
       <tab-control :titles="['流行', '新款', '精选']"
                    @tabClick="tabClick"
                    ref="tabControl"></tab-control>
@@ -119,6 +119,9 @@
         //   this.goods[type].page++;
         // })
 
+      },
+      scrollRefresh(){
+        this.$refs.scroll.refresh()
       }
     },
     computed: {
