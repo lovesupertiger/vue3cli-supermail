@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-    <detail-nav-bar @titleClick="titleClick"></detail-nav-bar>
-    <scroll class="content" ref="scroll">
+    <detail-nav-bar @titleClick="titleClick" ref="DetailNavbar"></detail-nav-bar>
+    <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
@@ -524,21 +524,32 @@
             cfav: 10
           }
         ],
-        themeTopYs: []
+        themeTopYs: [],
+        currentIndex: 0
       }
     },
     methods: {
       imageLoad() {
         this.$refs.scroll.refresh();
-        this.themeTopYs=[];
+        this.themeTopYs = [];
         this.themeTopYs.push(0);
-        this.themeTopYs.push(this.$refs.paramInfo.$el.offsetTop-30);
-        this.themeTopYs.push(this.$refs.commentInfo.$el.offsetTop-30);
-        this.themeTopYs.push(this.$refs.recommands.$el.offsetTop-30);
+        this.themeTopYs.push(this.$refs.paramInfo.$el.offsetTop - 30);
+        this.themeTopYs.push(this.$refs.commentInfo.$el.offsetTop - 30);
+        this.themeTopYs.push(this.$refs.recommands.$el.offsetTop - 30);
+        this.themeTopYs.push(Number.MAX_VALUE);
       },
       titleClick(index) {
         this.$refs.scroll.scrollTo(0, -this.themeTopYs[index])
-      }
+      },
+      contentScroll(position) {
+        const y = -position.y;
+        for (let i = 0; i < this.themeTopYs.length; i++) {
+          if (this.currentIndex != i && y > this.themeTopYs[i] && y<this.themeTopYs[i+1]) {
+            this.currentIndex = i;
+            this.$refs.DetailNavbar.currentIndex = this.currentIndex;
+          }
+        }
+      },
     },
     created() {
       //1.保存ID
@@ -558,7 +569,6 @@
         }
       })
     }
-
   }
 </script>
 
