@@ -11,7 +11,7 @@
       <goods-list :goods="recommands" ref="recommands"></goods-list>
     </scroll>
     <back-top @click.native="backClick" v-show="backShow"/>
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
   </div>
 </template>
 
@@ -535,6 +535,17 @@
       }
     },
     methods: {
+      addToCart(){
+        //1.获取购物车需要展示的信息
+        let product = {};
+        product.image = this.topImages[0];
+        product.title = this.goods.title;
+        product.desc = this.detailInfo.desc;
+        product.price = this.goods.newPrice;
+        product.id = this.id;
+        //2.将商品添加到购物车
+        this.$store.dispatch('addCart', product);
+      },
       imageLoad() {
         this.$refs.scroll.refresh();
         this.themeTopYs = [];
@@ -591,6 +602,6 @@
   }
 
   .content {
-    height: calc(100% - 44px - 49px);
+    height: calc(100% - 44px - 40px);
   }
 </style>
