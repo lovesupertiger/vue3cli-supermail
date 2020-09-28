@@ -2,7 +2,7 @@
   <div class="recommand">
     <div v-for="item in recommands" class="recommand-item">
       <a :href="item.link">
-        <img :src="item.image" alt=""/>
+        <img :src="item.image" alt="" @load="imgLoad"/>
         <div>{{item.title}}</div>
       </a>
     </div>
@@ -17,6 +17,18 @@
         type: Array,
         default() {
           return [];
+        }
+      }
+    },
+    data(){
+      return {
+        count: 0
+      }
+    },
+    methods:{
+      imgLoad(){
+        if(++this.count == this.recommands.length){
+          this.$emit('imgLoad')
         }
       }
     }

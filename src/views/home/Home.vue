@@ -10,8 +10,8 @@
                  v-show="isTabControlFixed" ></tab-control>
     <scroll class="content" ref="scroll" :probe-type="3" :pull-up-load="true"
             @scroll="contentScroll" @pullingUp="loadMore">
-      <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad"/>
-      <home-recommands :recommands="recommands"/>
+      <home-swiper :banners="banners" @swiperImageLoad="scrollRefresh"/>
+      <home-recommands :recommands="recommands" @imgLoad="scrollRefresh"/>
       <feature-view @imgLoad="scrollRefresh"></feature-view>
       <tab-control :titles="['流行', '新款', '精选']"
                    @tabClick="tabClick"
@@ -65,12 +65,6 @@
     },
     methods: {
       /**
-       * 图片加载监听事件
-       */
-      swiperImageLoad(){
-        this.tabControlOffset = this.$refs.tabControl.$el.offsetTop
-      },
-      /**
        * 事件监听
        */
       tabClick(index) {
@@ -121,7 +115,10 @@
 
       },
       scrollRefresh(){
+        //1.刷新scroll区域
         this.$refs.scroll.refresh()
+        //2.获取tabcontrol的位置
+        this.tabControlOffset = this.$refs.tabControl.$el.offsetTop;
       }
     },
     computed: {
