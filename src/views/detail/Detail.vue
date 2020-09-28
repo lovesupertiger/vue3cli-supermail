@@ -18,7 +18,7 @@
 <script>
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/GoodsList";
-  import BackTop from "components/content/backTop/BackTop";
+
 
   import DetailNavBar from "./components/DetailNavBar";
   import DetailSwiper from "./components/DetailSwiper";
@@ -29,12 +29,13 @@
   import DetailCommentInfo from "./components/DetailCommentInfo";
   import DetailBottomBar from "./components/DetailBottomBar";
 
+  import {backTopMixin} from "common/mixin.js";
   export default {
     name: "Detail",
+    mixins:[backTopMixin],
     components: {
       Scroll,
       GoodsList,
-      BackTop,
 
       DetailNavBar,
       DetailSwiper,
@@ -531,13 +532,9 @@
         ],
         themeTopYs: [],
         currentIndex: 0,
-        backShow: false
       }
     },
     methods: {
-      backClick() {
-        this.$refs.scroll.scrollTo(0, 0, 500)
-      },
       imageLoad() {
         this.$refs.scroll.refresh();
         this.themeTopYs = [];
@@ -552,7 +549,7 @@
       },
       contentScroll(position) {
         //判读回到顶部按钮是否显示
-        this.backShow = position.y < -1000
+        this.showListener(position);
 
         //滚动时自动适配Navbar
         const y = -position.y;

@@ -29,22 +29,22 @@
 
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/GoodsList";
-  import BackTop from "components/content/backTop/BackTop";
 
   import HomeSwiper from "./components/HomeSwiper";
   import HomeRecommands from "./components/HomeRecommands";
   import FeatureView from "./components/FeatureView";
 
   import {getHomeMultidata} from 'network/home.js'
+  import {backTopMixin} from "common/mixin.js";
 
   export default {
     name: "Home",
+    mixins:[backTopMixin],
     components: {
       NavBar,
       Scroll,
       TabControl,
       GoodsList,
-      BackTop,
       HomeSwiper,
       HomeRecommands,
       FeatureView,
@@ -86,12 +86,9 @@
         this.$refs.tabControl1.currentIndex = index;
         this.$refs.tabControl.currentIndex = index;
       },
-      backClick() {
-        this.$refs.scroll.scrollTo(0, 0, 500)
-      },
       contentScroll(position) {
         //1.判断BackTop是否显示
-        this.backShow = position.y < -1000
+        this.showListener(position);
         //2.决定TabControl是否吸顶(position: fixed)
         this.isTabControlFixed = position.y < -this.tabControlOffset;
       },
@@ -131,7 +128,6 @@
     },
     data() {
       return {
-        backShow: false,
         tabControlOffset: 0,
         isTabControlFixed: false,
         saveY: 0,
