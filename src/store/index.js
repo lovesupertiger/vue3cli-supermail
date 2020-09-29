@@ -10,6 +10,9 @@ const store = new Vuex.Store({
   getters:{
     cartLength(state){
       return state.cartList.length;
+    },
+    cartList(state){
+      return state.cartList;
     }
   },
   mutations: {
@@ -30,6 +33,7 @@ const store = new Vuex.Store({
      */
     addToCart(state, payload){
       payload.count = 1;
+      payload.checked = true;
       state.cartList.push(payload);
     }
   },
