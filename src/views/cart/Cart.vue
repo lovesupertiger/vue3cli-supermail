@@ -3,7 +3,10 @@
     <nav-bar class="nav-bar">
       <div slot="center">购物车({{cartLength}})</div>
     </nav-bar>
+    <!-- 商品列表 -->
     <cart-list></cart-list>
+    <!-- 底层组件 -->
+    <cart-bottom-bar></cart-bottom-bar>
   </div>
 </template>
 
@@ -13,11 +16,13 @@
   import {mapGetters} from 'vuex';
 
   import CartList from "./components/CartList";
+  import CartBottomBar from "./components/CartBottomBar";
   export default {
     name: "Cart",
     components: {
       NavBar,
-      CartList
+      CartList,
+      CartBottomBar
     },
     data() {
       return {}
