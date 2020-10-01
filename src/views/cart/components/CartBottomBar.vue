@@ -1,7 +1,9 @@
 <template>
   <div class="bottom-bar">
     <div class="check-content">
-      <check-button class="check-all" />
+      <check-button class="check-all"
+                    :is-checked="isSelectAll"
+                    @click.native="checkClick"/>
       <span>全选</span>
     </div>
     <div class="price">
@@ -15,19 +17,35 @@
 
 <script>
   import CheckButton from "components/content/checkButton/CheckButton";
+
   export default {
     name: "CartBottomBar",
-    components:{
+    components: {
       CheckButton
     },
-    computed:{
-      totalPrice(){
-        return this.$store.getters.cartList.filter(item=>item.checked).reduce((pre,item)=>{
-          return pre + item.price*item.count;
-        },0).toFixed(2);
+    methods:{
+      checkClick(){
+        if(this.isSelectAll){
+          this.$store.getters.cartList.forEach(item=> item.checked=false);
+        }else{
+          this.$store.getters.cartList.forEach(item=> item.checked=true);
+        }
+      }
+    },
+    computed: {
+      totalPrice() {
+        return this.$store.getters.cartList.filter(item => item.checked).reduce((pre, item) => {
+          return pre + item.price * item.count;
+        }, 0).toFixed(2);
       },
-      checkLength(){
-        return this.$store.getters.cartList.filter(item=>item.checked).length;
+      checkLength() {
+        return this.$store.getters.cartList.filter(item => item.checked).length;
+      },
+      isSelectAll() {
+        if (this.$store.getters.cartList.length == 0) {
+          return false;
+        }
+        return !this.$store.getters.cartList.filter(item => !item.checked).length;
       }
     }
   }
@@ -35,7 +53,7 @@
 
 <style scoped>
 
-  .bottom-bar{
+  .bottom-bar {
     position: relative;
     display: flex;
 
@@ -44,23 +62,27 @@
 
     background-color: #eeeeee;
   }
-  .check-content{
+
+  .check-content {
     display: flex;
     align-items: center;
     margin-left: 10px;
     width: 60px;
   }
-  .check-all{
+
+  .check-all {
     width: 20px;
     height: 20px;
     line-height: 20px;
     margin-right: 5px;
   }
-  .price{
+
+  .price {
     margin-left: 20px;
     flex: 1;
   }
-  .calulate{
+
+  .calulate {
     width: 90px;
     background-color: red;
     color: #eeeeee;
