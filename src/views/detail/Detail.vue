@@ -19,7 +19,6 @@
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/GoodsList";
 
-
   import DetailNavBar from "./components/DetailNavBar";
   import DetailSwiper from "./components/DetailSwiper";
   import DetailBaseInfo from "./components/DetailBaseInfo";
@@ -30,13 +29,14 @@
   import DetailBottomBar from "./components/DetailBottomBar";
 
   import {backTopMixin} from "common/mixin.js";
+  import {mapActions} from 'vuex'
+
   export default {
     name: "Detail",
-    mixins:[backTopMixin],
+    mixins: [backTopMixin],
     components: {
       Scroll,
       GoodsList,
-
       DetailNavBar,
       DetailSwiper,
       DetailBaseInfo,
@@ -532,10 +532,13 @@
         ],
         themeTopYs: [],
         currentIndex: 0,
+        message: '',
+        show: false
       }
     },
     methods: {
-      addToCart(){
+      ...mapActions(['addCart']),
+      addToCart() {
         //1.获取购物车需要展示的信息
         let product = {};
         product.image = this.topImages[0];
@@ -544,7 +547,12 @@
         product.price = this.goods.newPrice;
         product.id = this.id;
         //2.将商品添加到购物车
-        this.$store.dispatch('addCart', product);
+        this.addCart(product).then(res => {
+          this.$toast.show(res, 1500);
+        })
+        // this.$store.dispatch('addCart', product).then(res=>{
+        //   console.log(res)
+        // });
       },
       imageLoad() {
         this.$refs.scroll.refresh();
@@ -565,7 +573,7 @@
         //滚动时自动适配Navbar
         const y = -position.y;
         for (let i = 0; i < this.themeTopYs.length; i++) {
-          if (this.currentIndex != i && y >= this.themeTopYs[i] && y<this.themeTopYs[i+1]) {
+          if (this.currentIndex != i && y >= this.themeTopYs[i] && y < this.themeTopYs[i + 1]) {
             this.currentIndex = i;
             this.$refs.DetailNavbar.currentIndex = this.currentIndex;
           }

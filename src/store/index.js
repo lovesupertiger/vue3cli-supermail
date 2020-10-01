@@ -44,13 +44,19 @@ const store = new Vuex.Store({
      * @param payload
      */
     addCart(context, payload) {
-      //1.判断商品是否已存在
-      let find = context.state.cartList.find(item => item.id === payload.id);
-      if (!find) {
-        context.commit('addToCart', payload);
-      } else {
-        context.commit('addCounter', find);
-      }
+      return new Promise((resolve, reject)=>{
+        //1.判断商品是否已存在
+        let find = context.state.cartList.find(item => item.id === payload.id);
+        if (!find) {
+          context.commit('addToCart', payload);
+          resolve('添加新的商品');
+
+        } else {
+          context.commit('addCounter', find);
+          resolve('当前的商品数量+1');
+        }
+      })
+
     }
   }
 })
